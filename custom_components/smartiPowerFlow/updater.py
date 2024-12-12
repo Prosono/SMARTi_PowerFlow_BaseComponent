@@ -157,7 +157,7 @@ async def update_files(session: aiohttp.ClientSession, config_data: dict, github
         return
 
     await clear_specific_files(PACKAGES_PATH, PACKAGES_FILES_TO_DELETE)
-    await clear_specific_files(DASHBOARDS_PATH, PACKAGES_FILES_TO_DELETE)
+    await clear_specific_files(DASHBOARDS_PATH, DASHBOARDS_FILES_TO_DELETE)
 
     ensure_directory(PACKAGES_PATH)
     ensure_directory(DASHBOARDS_PATH)

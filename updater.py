@@ -26,7 +26,7 @@ DASHBOARDS_PATH = "/config/dashboards/"
 
 PACKAGES_FILES_TO_DELETE = [
     "smarti_powerflow_package.yaml", 
-    "smarti_dashboard_package_powerflow.yaml"
+    "smarti_dashboard_package.yaml"
 ]
 
 DASHBOARDS_FILES_TO_DELETE = {

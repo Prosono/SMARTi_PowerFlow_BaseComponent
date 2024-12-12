@@ -12,43 +12,25 @@ from urllib.parse import urlparse
 
 _LOGGER = logging.getLogger(__name__)
 
-DOMAIN = "smarti"
+DOMAIN = "smartiPowerFlow"
 
-GITHUB_REPO_URL = "https://api.github.com/repos/Prosono/SMARTi_Configuration/contents/"
+GITHUB_REPO_URL = "https://api.github.com/repos/Prosono/SMARTi_PowerFlow_Configuration/contents/"
 
 PACKAGES_URL = GITHUB_REPO_URL + "packages/"
 DASHBOARDS_URL = GITHUB_REPO_URL + "dashboards/"
-THEMES_URL = GITHUB_REPO_URL + "themes/smarti_themes/"
-IMAGES_URL = GITHUB_REPO_URL + "www/images/smarti_images/"
-#CUSTOM_CARD_RADAR_URL = GITHUB_REPO_URL + "www/community/weather-radar-card/"
+
 
 PACKAGES_PATH = "/config/packages/"
-THEMES_PATH = "/config/themes/smarti_themes/"
 DASHBOARDS_PATH = "/config/dashboards/"
-IMAGES_PATH = "/config/www/images/smarti_images"
-#CUSTOM_CARD_RADAR_PATH = "/config/www/community/weather-radar-card/"
+
 
 PACKAGES_FILES_TO_DELETE = [
-    "smarti_custom_cards_package.yaml", 
-    "smarti_dashboard_package.yaml", 
-    "smarti_dashboard_settings.yaml",
-    "smarti_dynamic_power_sensor_package.yaml",
-    "smarti_general_automations.yaml", 
-    "smarti_general_package.yaml", 
-    "smarti_location_package.yaml",
-    "smarti_navbar_package.yaml", 
-    "smarti_power_control_package.yaml", 
-    "smarti_power_price_package.yaml",
-    "smarti_powerflow_gridfee_package.yaml",
-    "smarti_template_sensors.yaml",
-    "smarti_weather_package.yaml",
-    "smarti_translation_package.yaml",
-    "smarti_powerflow_gridfee_automations"
+    "smarti_powerflow_package.yaml", 
+    "smarti_dashboard_package_powerflow.yaml"
 ]
 
 DASHBOARDS_FILES_TO_DELETE = {
-    "SMARTi_Language_Norsk.yaml",
-    "SMARTi_Language_English.yaml"
+    "SMARTi_Power_Flow.yaml",
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -179,11 +161,8 @@ async def update_files(session: aiohttp.ClientSession, config_data: dict, github
 
     ensure_directory(PACKAGES_PATH)
     ensure_directory(DASHBOARDS_PATH)
-    ensure_directory(THEMES_PATH)
-    ensure_directory(IMAGES_PATH)
-    #ensure_directory(CUSTOM_CARD_RADAR_PATH)
 
-
+    # Get and download package files
     package_files = await get_files_from_github(PACKAGES_URL, session, github_pat)
     for file_url in package_files:
         if file_url:
@@ -194,41 +173,12 @@ async def update_files(session: aiohttp.ClientSession, config_data: dict, github
             await download_file(file_url, dest_path, session, github_pat)
 
     # Get and download dashboard files
-    if config_data.get("update_dashboards"):
-        dashboard_files = await get_files_from_github(DASHBOARDS_URL, session, github_pat)
-        for file_url in dashboard_files:
-            if file_url:
-                file_name = os.path.basename(file_url)
-                dest_path = os.path.join(DASHBOARDS_PATH, file_name)
-                _LOGGER.info(f"Saving dashboard file to {dest_path}")
-                await download_file(file_url, dest_path, session, github_pat)
-
-    # Get and download Themes files
-    themes_files = await get_files_from_github(THEMES_URL, session, github_pat)
-    for file_url in themes_files:
+    dashboard_files = await get_files_from_github(PACKAGES_URL, session, github_pat)
+    for file_url in dashboard_files:
         if file_url:
-            file_name = os.path.basename(file_url)
-            dest_path = os.path.join(THEMES_PATH, file_name)
-            _LOGGER.info(f"Saving themes file to {dest_path}")
+            # Extract the file name without query parameters
+            file_name = os.path.basename(urlparse(file_url).path)
+            dest_path = os.path.join(DASHBOARDS_PATH, file_name)
+            _LOGGER.info(f"Saving dashboard file to {dest_path}")
             await download_file(file_url, dest_path, session, github_pat)
-
-    # Get and download IMAGE files
-    image_files = await get_files_from_github(IMAGES_URL, session, github_pat)
-    for file_url in image_files:
-        if file_url:
-            file_name = os.path.basename(file_url)
-            dest_path = os.path.join(IMAGES_PATH, file_name)
-            _LOGGER.info(f"Saving image file to {dest_path}")
-            await download_file(file_url, dest_path, session, github_pat)
-
-    # Get and download CUSTOM CARDS files
-    #radar_card_files = await get_files_from_github(CUSTOM_CARD_RADAR_URL, session, github_pat)
-    #for file_url in radar_card_files:
-    #    if file_url:
-    #        file_name = os.path.basename(file_url)
-    #        dest_path = os.path.join(CUSTOM_CARD_RADAR_PATH, file_name)
-    #        _LOGGER.info(f"Saving card files to {dest_path}")
-    #        await download_file(file_url, dest_path, session, github_pat)
-
-
 

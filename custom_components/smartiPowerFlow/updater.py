@@ -173,7 +173,7 @@ async def update_files(session: aiohttp.ClientSession, config_data: dict, github
             await download_file(file_url, dest_path, session, github_pat)
 
     # Get and download dashboard files
-    dashboard_files = await get_files_from_github(PACKAGES_URL, session, github_pat)
+    dashboard_files = await get_files_from_github(DASHBOARDS_URL, session, github_pat)
     for file_url in dashboard_files:
         if file_url:
             # Extract the file name without query parameters

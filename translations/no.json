@@ -1,0 +1,20 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Konfigurer SMARTi",
+                "description": "Oppgi e-postadressen din og GitHub API-token for å konfigurere SMARTi PowerFlow™.",
+                "data": {
+                    "email": "E-postadresse",
+                    "api_token": "GitHub API-token"
+                }
+            }
+        },
+        "error": {
+            "invalid_subscription": "Den oppgitte e-posten har ikke et aktivt abonnement på SMARTi PowerFlow™. Vennligst besøk https://www.smarti.dev/smarti-store/p/smarti-powerflow for å aktivere abonnementet ditt. Hvis du allerede har et aktivt abonnement og ikke klarer å sette opp integrasjonen, kan du kontakte oss på support@smarti.dev.",
+            "invalid_token": "Det oppgitte GitHub API-tokenet er ugyldig.",
+            "unknown_error": "En ukjent feil oppstod."
+        }
+    },
+    "title": "SMARTi PowerFlow™ Integrasjon"
+}

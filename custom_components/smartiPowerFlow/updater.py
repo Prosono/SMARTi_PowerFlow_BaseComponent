@@ -12,7 +12,7 @@ from urllib.parse import urlparse
 
 _LOGGER = logging.getLogger(__name__)
 
-DOMAIN = "smartiPowerFlow"
+DOMAIN = "smartipowerflow"
 
 GITHUB_REPO_URL = "https://api.github.com/repos/Prosono/SMARTi_PowerFlow_Configuration/contents/"
 

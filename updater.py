@@ -30,7 +30,7 @@ PACKAGES_FILES_TO_DELETE = [
 ]
 
 DASHBOARDS_FILES_TO_DELETE = {
-    "SMARTi_Power_Flow.yaml",
+    "SMARTi_Power_Flow_Dashboard.yaml",
 }
 
 _LOGGER = logging.getLogger(__name__)

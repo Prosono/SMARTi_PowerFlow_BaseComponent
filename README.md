@@ -1,56 +1,87 @@
-SMARTi Integration for Home Assistant
+SMARTi PowerFlow™
 
-SMARTi is a powerful Home Assistant integration designed to enhance your smart home experience. It simplifies energy management, device control, and automation setup while providing seamless updates through HACS.
-Features
+SMARTi PowerFlow™ is a premium energy management solution designed to seamlessly integrate into your Home Assistant setup. With real-time energy monitoring, intelligent automations, and custom dashboards, SMARTi PowerFlow™ empowers you to optimize your energy usage, save money, and contribute to a sustainable future.
+Requirements
+Prerequisites:
 
-Energy Management: Dynamically monitor energy usage with categorized devices.
-Seamless Updates: Now fully compatible with HACS for effortless installation and updates.
-Localization: Supports multiple languages, including Norwegian and English.
-Pre-configured Settings: Easy setup with minimal user input required.
+    Home Assistant 2024.8 or Above
+    SMARTi PowerFlow™ is only compatible with Home Assistant version 2024.8 or later. Installing it on an earlier version may result in errors.
 
-Installation
-Via HACS
+    Check your version of Home Assistant here.
 
-Ensure you have HACS installed in your Home Assistant instance.
-Add this repository as a custom repository:
-    Open HACS in Home Assistant.
-    Go to Settings > Custom Repositories.
-    Add the repository URL: https://github.com/yourusername/smarti.
-    Set the category to Integration and click Add.
-Search for SMARTi in HACS and click Install.
-Restart Home Assistant.
+    Custom Home Assistant Configuration
+    You need some familiarity with Home Assistant configuration, including editing the configuration.yaml file.
 
-Manual Installation
+    Pre-Configured Option
+    This subscription does not include Home Assistant software. For a plug-and-play solution, consider purchasing the SMARTi HUB, which comes pre-configured and ready to use.
 
-Clone this repository or download it as a ZIP file.
-Extract the contents and copy the custom_components/smarti directory to your Home Assistant config/custom_components/ directory.
-Restart Home Assistant.
+Dependencies
 
-Setup
+To ensure proper functionality, the following integrations and cards must be installed:
+Integrations:
 
-Go to Settings > Devices & Services > Add Integration in Home Assistant.
-Search for SMARTi and select it.
-SMARTi will be automatically configured—no additional input required.
+    HACS
+    Nordpool
 
-SMARTi supports multiple languages:
+Lovelace Cards:
 
-    English (default)
-    Norwegian (Norsk)
+    auto-entities
+    lovelace-mushroom
+    bar-card
+    card-mod
+    tabbed-card
+    apexcharts-card
+    layout-card
+    slider-button-card
 
-More languages can be added upon request.
-Contributing
+YAML Configuration:
 
-We welcome contributions! If you'd like to add features or report bugs:
+Make sure to include this in your configuration.yaml:
 
-Fork this repository.
-Create a new branch.
-Submit a pull request with your changes.
+homeassistant:
+  packages: !include_dir_named packages
+
+Note: If your Lovelace configuration is part of another package, you’ll need to copy the dashboard configuration for SMARTi PowerFlow™ into your existing package to make the dashboard visible.
+Installation Instructions
+Step 1: Install HACS
+
+Follow the official instructions to set up the Home Assistant Community Store (HACS).
+Step 2: Install the Nord Pool Integration
+
+Use HACS to install the Nord Pool integration, then restart Home Assistant. Add your Nord Pool sensor for your price area during the setup.
+Step 3: Install Required Lovelace Cards
+
+Install all required cards listed above via HACS. Alternatively, you can install them manually by following each card’s documentation.
+Step 4: Install SMARTi PowerFlow™
+
+    Open HACS.
+    Search for SMARTi PowerFlow™ under Integrations and install it.
+    Restart Home Assistant after installation.
+
+Step 5: Configure SMARTi PowerFlow™
+
+    Go to Settings → Devices & Services → + Add Integration.
+    Search for SMARTi PowerFlow™.
+    Enter your email and subscription token (sent via email) to verify and activate the integration.
+
+Step 6: Restart Home Assistant
+
+Restart Home Assistant to apply all configuration changes.
+Step 7: Set Up Your Dashboard
+
+    Navigate to the "SMARTi PowerFlow" dashboard.
+    Add your devices to start monitoring and controlling your energy consumption.
+
+Documentation
+
+For additional details, visit the official SMARTi PowerFlow™ page.
+Support
+
+    FAQ: Visit our FAQ.
+    Contact Us: Email us at support@smarti.dev.
 
 License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
-Support
+SMARTi PowerFlow™ is licensed under the MIT License. See the LICENSE file for details.
 
-If you encounter any issues, please open an issue in the GitHub repository.
-
-Let me know if you want to customize specific sections or add additional details!
+This README aligns with your requirements and provides clear guidance on setup and installation. Let me know if you’d like further refinements!

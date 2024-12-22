@@ -60,6 +60,33 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     # Remove entry data
     hass.data[DOMAIN].pop(entry.entry_id, None)
+
+    # Paths to clear
+    packages_path = "/config/packages/"
+    dashboards_path = "/config/dashboards/"
+
+    # Files to delete
+    packages_files_to_delete = [
+        "smarti_powerflow_package.yaml",
+        "smarti_dashboard_package.yaml",
+    ]
+    dashboards_files_to_delete = [
+        "SMARTi_Power_Flow_Dashboard.yaml",
+    ]
+
+    # Clear specific files
+    try:
+        await clear_specific_files(packages_path, packages_files_to_delete)
+        _LOGGER.info(f"Cleared specific files in: {packages_path}")
+    except Exception as e:
+        _LOGGER.error(f"Failed to clear specific files in packages: {e}")
+
+    try:
+        await clear_specific_files(dashboards_path, dashboards_files_to_delete)
+        _LOGGER.info(f"Cleared specific files in: {dashboards_path}")
+    except Exception as e:
+        _LOGGER.error(f"Failed to clear specific files in dashboards: {e}")
+
     return True
 
 async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry):

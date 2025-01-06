@@ -6,10 +6,10 @@ from .const import DOMAIN  # Ensure const.py defines DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
-async def validate_token_and_get_pat(email, token):
+async def validate_token_and_get_pat(email, token, integration):
     """Validate the token with the backend and return the GitHub PAT on success."""
     url = "https://smarti.pythonanywhere.com/validate-token"
-    payload = {"email": email, "token": token}
+    payload = {"email": email, "token": token, "integration": integration}
 
     _LOGGER.debug(f"Starting token validation. URL: {url}, Payload: {payload}")
 
@@ -46,7 +46,7 @@ async def validate_token_and_get_pat(email, token):
     return None
 
 @config_entries.HANDLERS.register(DOMAIN)
-class SmartiConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+class SmartiPowerFlowConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for SMARTi PowerFlow."""
 
     VERSION = 1
@@ -61,7 +61,8 @@ class SmartiConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             token = user_input["token"]
 
             _LOGGER.info(f"Validating token for email: {email}")
-            github_pat = await validate_token_and_get_pat(email, token)
+            # Pass "smartipowerflow" as the integration identifier
+            github_pat = await validate_token_and_get_pat(email, token, "smartipowerflow")
 
             if github_pat:
                 _LOGGER.info("Configuration entry for SMARTi PowerFlow creation successful.")

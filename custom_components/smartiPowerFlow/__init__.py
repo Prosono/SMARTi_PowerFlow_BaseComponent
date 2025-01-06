@@ -1,4 +1,6 @@
 import logging
+import os
+import asyncio
 import aiohttp
 from datetime import timedelta
 
@@ -44,6 +46,22 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     await update_files(session, config_data, github_pat)
 
     return True
+
+async def clear_specific_files(directory: str, files_to_delete: list):
+    """Delete specific files asynchronously."""
+    if not os.path.exists(directory):
+        _LOGGER.warning(f"Directory {directory} does not exist, skipping file deletion.")
+        return
+    for filename in files_to_delete:
+        file_path = os.path.join(directory, filename)
+        if os.path.isfile(file_path):
+            try:
+                await asyncio.to_thread(os.remove, file_path)
+                _LOGGER.info(f"Deleted file: {file_path}")
+            except Exception as e:
+                _LOGGER.error(f"Failed to delete file {file_path}: {e}")
+        else:
+            _LOGGER.info(f"File {file_path} does not exist or is not a file.")
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload a config entry."""
